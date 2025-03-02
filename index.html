@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club Members</title>
+</head>
+<body>
+    <h1>Club Members</h1>
+    <div id="members"></div>
+    <script>
+        fetch('https://your-api-url.com/members')
+            .then(response => response.json())
+            .then(data => {
+                const membersContainer = document.getElementById('members');
+                data.forEach(member => {
+                    const memberDiv = document.createElement('div');
+                    memberDiv.innerHTML = `
+                        <h2>${member.name}</h2>
+                        <p>${member.description}</p>
+                        <h3>Projects:</h3>
+                        <ul>
+                            ${member.projects.map(project => `<li>${project}</li>`).join('')}
+                        </ul>
+                    `;
+                    membersContainer.appendChild(memberDiv);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
+</body>
+</html>
