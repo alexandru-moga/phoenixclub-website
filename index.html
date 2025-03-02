@@ -3,30 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Club Members</title>
+    <title>Phoenix Club Members</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+        }
+        #login-btn {
+            float: right;
+            background: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+        #members-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        #members-list li {
+            background: #fff;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Club Members</h1>
-    <div id="members"></div>
+    <header>
+        <h1>Phoenix Club Members</h1>
+        <button id="login-btn" onclick="location.href='login.html'">Login</button>
+    </header>
+    <ul id="members-list">
+    </ul>
     <script>
-        fetch('https://your-api-url.com/members')
-            .then(response => response.json())
-            .then(data => {
-                const membersContainer = document.getElementById('members');
-                data.forEach(member => {
-                    const memberDiv = document.createElement('div');
-                    memberDiv.innerHTML = `
-                        <h2>${member.name}</h2>
-                        <p>${member.description}</p>
-                        <h3>Projects:</h3>
-                        <ul>
-                            ${member.projects.map(project => `<li>${project}</li>`).join('')}
-                        </ul>
-                    `;
-                    membersContainer.appendChild(memberDiv);
-                });
-            })
-            .catch(error => console.error('Error:', error));
-    </script>
+        fetch('/public-profiles')
+          .then(response => response.json())
+          .then(profiles => {
+            const profilesContainer = document.getElementById('public-profiles');
+            profiles.forEach(profile => {
+              const profileDiv = document.createElement('div');
+              profileDiv.innerHTML = `
+                <h2>${profile.name}</h2>
+                <img src="${profile.pictureUrl}" alt="${profile.name}" />
+                <p>${profile.description}</p>
+                <h3>Projects:</h3>
+                <ul>
+                  ${profile.projects.map(project => `<li>${project}</li>`).join('')}
+                </ul>
+              `;
+              profilesContainer.appendChild(profileDiv);
+            });
+          })
+          .catch(error => console.error('Error:', error));
+      </script>
 </body>
 </html>
